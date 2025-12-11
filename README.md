@@ -1,6 +1,6 @@
 # Using R to work with DIAMOND files
 
-### Turning DIAMOND outputs into a workable file
+### Turning DIAMOND outputs into a workable file on ARC
 DIAMOND outputs are a little tricky, as it does not compile the number of times a gene is seen in a sample. Therefore, we have to do it ourselves.
 
 As a refresher, here's the code I ran for DIAMOND. This took ~1 day.
@@ -289,3 +289,93 @@ echo "Merge complete. Merged file: $output_file"
 ```
 
 </details>
+
+### Workin in R
+
+<details>
+<summary> ChezLiz.R</summary>
+
+```
+library(tidyverse)
+library(RColorBrewer)
+
+setwd("C:/Users/Jvlan/Downloads")
+
+CARD_aro <- read.csv("CARD4.0.1_aro_cat.csv")
+Args <- read.delim("ChezLiz_merged_args_new.txt")
+metadata <- read.csv("ChezLizMetadata.csv")
+drugs <- read.csv("Antibiotic to Drug.csv")
+
+for (i in 1:nrow(CARD_aro)) {
+  for (j in 1:nrow(drugs)) {
+    if(grepl(drugs[j,1], CARD_aro[i, 4])) {CARD_aro[i, "Drug"] <- drugs[j,2]}
+  }
+}
+
+for (i in 1:nrow(CARD_aro)) {
+  if(grepl(";", CARD_aro[i, 4])) {CARD_aro[i, "Drug"] <- "Multidrug"}
+}
+
+CARD_aro$Drug[is.na(CARD_aro$Drug)] <- "Other"
+
+Args <- merge(Args, CARD_aro, by.x = "protein_accession", by.y = "Protein.Accession")
+
+Args$sample = substr(Args$sample, 1, nchar(Args$sample)-10)
+Args <- merge(Args, metadata, by.x = "sample", by.y = "sample_original")
+
+Args$rpob_Normalization[Args$rpob_Normalization==""] <- 0
+
+Args$Drug.Class <- as.factor(Args$Drug.Class)
+Args$Fraction <- as.factor(Args$Fraction)
+Args$rpob_Normalization <- as.numeric(Args$rpob_Normalization)
+Args$count <- as.numeric(Args$count)
+Args$Drug <- as.factor(Args$Drug)
+
+df <- Args %>%
+  group_by(sample, Fraction, Date, Drug) %>%
+  summarize(sum_rpob_normalized_count = sum(rpob_Normalization))
+
+#Checking highest
+a <- df %>%
+  group_by(Drug) %>%
+  summarize(drug_count = sum(sum_rpob_normalized_count))
+
+df$Drug <- factor(df$Drug, levels = c("Multidrug", "Other", "peptide", "aminoglycoside", "macrolide-lincosamide-streptogramin",
+                                      "quinolone", "beta_lactam", "tetracycline", "aminocoumarin", "sulfonamide",
+                                      "phenicol", "mupirocin", "pleuromutilin"))
+
+bubble <- Args %>%
+  group_by(Drug, Fraction) %>%
+  summarize(sum_rpob_normalized_count = sum(rpob_Normalization))
+
+controlRow <- 5
+bubble$logDiff <- 0
+for (i in 1:13) {
+  for (k in 1:7) { 
+    count = k+((i*7)-7)
+    bubble[count, 4] <- log10(bubble[count, 3]/bubble[controlRow, 3])
+  }
+  controlRow <- controlRow +7
+}
+
+bubble$absLogDiff <- abs(bubble$logDiff)
+
+bubble$Pos <- ifelse(bubble$logDiff >= 0, "Increase", "Decrease")
+
+bubble$Fraction <- factor(bubble$Fraction, levels = c("INF", "EFF", "BOIL", "30M", "100M"))
+
+ggplot(subset(bubble, Fraction %in% c("100M", "30M", "BOIL", "EFF", "INF")), aes(x = Fraction, y = Drug, size = absLogDiff)) +
+  geom_point(alpha = 0.8, aes(color = Pos)) +
+  theme_bw() + 
+  scale_size(range = c(1, 20)) +
+  xlab("Sampling Location") +
+  labs(size = "Log Difference to Control") +
+  guides(color = guide_legend(override.aes = list(size = 6))) +
+  labs(color = "Change") 
+```
+
+</details>
+
+This gets you the image below. I'll write up results later. 
+<img width="1192" height="787" alt="image" src="https://github.com/user-attachments/assets/866c97e8-3d6b-4bd4-88bb-5fc423114f65" />
+
