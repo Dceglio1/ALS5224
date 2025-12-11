@@ -253,19 +253,19 @@ Finally, run merging_my_noramlized.sh. This script merges the previous abundance
 ```
 #!/bin/bash
 
-#SBATCH --account=introtogds
+#SBATCH --account=prudenlab
 #SBATCH --partition=normal_q
-#SBATCH --mem=1G
-#SBATCH -t 1:00:00
+#SBATCH --mem=20G
+#SBATCH -t 8:00:00
 #SBATCH -n 50
 #SBATCH -N 1
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=yourPID@vt.edu
+#SBATCH --mail-user=dceglio@vt.edu
 # Output file name
 
-output_file="I2GDS_G6_AMR_Diamond.txt"
+output_file="ChezLiz_merged_args_new.txt"
 
-cd /projects/intro2gds/I2GDS2025/G6_AMR_ARG/Daniel/Subset/diamond_output
+cd /projects/ciwars/ChezLiz/diamond_output/Abundances
 
 # Find and merge files
 
