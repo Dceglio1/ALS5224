@@ -1,36 +1,41 @@
-# Working with data in R to create a stacked bar plot
+# Using R to work with DIAMOND files
 
 ### Turning DIAMOND outputs into a workable file
 DIAMOND outputs are a little tricky, as it does not compile the number of times a gene is seen in a sample. Therefore, we have to do it ourselves.
 
-First, run DIAMOND again, this time annotating against an rpob reference database. The necessary reference file (RpoB.dmnd) is located in code-files.
+As a refresher, here's the code I ran for DIAMOND. This took ~1 day.
 
 <details>
   <summary>diamondrpob.sh</summary>
   
 ``` 
 #!/bin/bash
-#SBATCH --account=introtogds
+
+#SBATCH --account=prudenlab
 #SBATCH --partition=normal_q
-#SBATCH -t 7-00:00:00
+#SBATCH --mem=64G
+#SBATCH -t 144:00:00
+#SBATCH -n 50
+#SBATCH -N 1
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=yourPID@vt.edu
-#SBATCH --cpus-per-task=16
+#SBATCH --mail-user=dceglio@vt.edu
 
 module load Miniconda3
-
 source activate diamond_and_vsearch
 
-RPOB_DB='/projects/ciwars/databases/RpoB.dmnd' #replace with location of your downloaded RpoB.dmnd file
+cd /projects/ciwars/ChezLiz/vsearch_output
 
-cd #insert path to directory where all vsearch output files are located
+ARGDB='/projects/ciwars/ChezLiz/CARD4.0.1.dmnd'
+RPOB_DB='/projects/ciwars/databases/RpoB.dmnd'
 
-samples=$(ls *_clean_merged.fastq | awk '{gsub(/_clean_merged.fastq/,"",$0); print}' | sort | uniq)
+sample=$(ls R*merged.fasta.gz | awk -F/ '{gsub(/_clean_merged.fasta.gz/, "", $NF); print $NF}' | sort | uniq)
 
-for sample in $samples
-do
-	diamond blastx -e 1e-10 --id 40 -k 1 --threads 10 -d $RPOB_DB -q ${sample}_clean_merged.fastq -o ${sample}_rpob.csv --outfmt 6
+for samples in $sample; do
+	echo ${samples}
+	diamond blastx -e 1e-10 --id 80 -k 1 --threads 50 -d $ARGDB -q ${samples}_clean_merged.fasta.gz -o /projects/ciwars/ChezLiz/diamond_output/${samples}_arg_short.csv --outfmt 6
+	diamond blastx -e 1e-10 --id 40 -k 1 --threads 50 -d $RPOB_DB -q ${samples}_clean_merged.fasta.gz -o /projects/ciwars/ChezLiz/diamond_output/${samples}_rpob.csv --outfmt 6
 done
+
 ```
 </details>
 
