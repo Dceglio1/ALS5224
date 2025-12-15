@@ -3,7 +3,7 @@
 ### Turning DIAMOND outputs into a workable file on ARC
 DIAMOND outputs are a little tricky, as it does not compile the number of times a gene is seen in a sample. Therefore, we have to do it ourselves.
 
-As a refresher, here's the code I ran for DIAMOND. This took ~1 day.
+#### Code in ARC for DIAMOND
 
 Inputs:
 - CARD4.0.1.dmnd: This is the DIAMOND file created from the fasta file from the referecne database
@@ -48,6 +48,7 @@ done
 ```
 </details>
 
+#### Making DIAMOND Outputs Usable
 Next, put rp_abun.py in the same folder as your DIAMOND outputs.
 
 This code was written by Monjura Afrin Rumi a few years ago. 
