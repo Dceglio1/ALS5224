@@ -299,6 +299,7 @@ echo "Merge complete. Merged file: $output_file"
 Below is the R code used. 
 
 Packages: Tidyverse, version 2.0.0
+**Mistake to Avoid: Make sure only TidyVerse is loaded. Other packages use the 'group_by' function, and will mess the code up if ther're loaded**
 <details>
 <summary> ChezLiz.R</summary>
 
