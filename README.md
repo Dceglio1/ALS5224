@@ -292,6 +292,9 @@ echo "Merge complete. Merged file: $output_file"
 
 ### Workin in R
 
+Below is the R code used. 
+
+Packages: Tidyverse, version 2.0.0
 <details>
 <summary> ChezLiz.R</summary>
 
