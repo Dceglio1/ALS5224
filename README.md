@@ -48,6 +48,10 @@ done
 ```
 </details>
 
+Outputs:
+- 1 file for ARG alignments for each sample
+- 1 file for rpob alignments for each sample
+  
 #### Making DIAMOND Outputs Usable
 Next, put rp_abun.py in the same folder as your DIAMOND outputs.
 
@@ -203,7 +207,8 @@ if __name__ == '__main__':
 </details>
 
 
-Then, run cal_abundances.sh. You'll first need to create an environment named "mypy3" and install python and pandas. To do so, use the following lines of code.
+Then, run cal_abundances.sh. You'll first need to create an environment named "mypy3" and install python and pandas in the ARC. To do so, use the following lines of code.
+
 ```
 conda create -n mypy3 python=3.12 pip 
 source activate mypy3
@@ -211,9 +216,16 @@ conda install ipykernel
 pip install plotly kaleido
 conda install pandas
 ```
-Run cal_abundances.sh to calculate the abundance of each ARG and RPOB gene in every sample.
+Run cal_abundances.sh to calculate the abundance of each ARG and RPOB gene in every sample. This code came from Thomas Byrne. 
+
+Inputs:
+- protein_fasta_protein_homolog_model.len.txt: This gives the length of each read in the referenee database. Made for CARD 4.0.1
+- RpoB.ref.len: Length of each rpob gene in the reference database. File created by someone else (maybe Amanda Darling?)
+- DIAMOND outputs: This includes the csv files for both ARGs and rpob genes for each sample
 
 **Mistake to avoid: Make sure the --db is set to "card". The default is "deeparg", and without specifying the code will not run**
+
+**Mistake to Avoid: Mak"e sure to include "eval "$(conda shell.bash hook)"", as this forces python to activate. I don't know why it doesn't without this...**
 <details>
 <summary> cal_abundances.sh</summary>
 
@@ -260,7 +272,14 @@ done
 ```
 </details>
 
+Outputs:
+- 1 "abundance" file for each sample, showing rpob normalized ARG counts
+
 Finally, run merging_my_noramlized.sh. This script merges the previous abundance_new.csv files for each sample into a single, final output: I2GDS_G6_AMR_Diamond.txt. This output will be one of the inputs for the R script.
+
+Inputs:
+- The "abundance" files for each sample from the previous step
+
 <details>
 <summary> merging_my_noramlized.sh</summary>
 
@@ -304,6 +323,9 @@ echo "Merge complete. Merged file: $output_file"
 
 </details>
 
+Output:
+- 1 merged file with all data, named "ChezLiz_merged_args_new.txt"
+
 ### Workin in R
 
 Below is the R code used. 
@@ -311,6 +333,14 @@ Below is the R code used.
 Packages: Tidyverse, version 2.0.0
 
 **Mistake to Avoid: Make sure only TidyVerse is loaded. Other packages use the 'group_by' function, and will mess the code up if ther're loaded**
+
+Inputs:
+- CARD4.0.1_aro_cat.csv: From the CARD database, contains metadata about each ARG. Received when downloading CARD
+- ChezLiz_merged_args_new.txt: File from the previous steps
+- ChezLizMetadata.csv: Metadata about the samples
+- Antibiotic to Drug.csv: A csv I created from the deeparg database. Used to place ARGs into broader classes
+
+
 <details>
 <summary> ChezLiz.R</summary>
 
@@ -406,6 +436,9 @@ ggplot(subset(bubble, Fraction %in% c("100M", "30M", "BOIL", "EFF", "INF")), aes
 ```
 
 </details>
+
+Output:
+- The image below
 
 This gets you the image below. I'll write up results later. 
 <img width="1192" height="787" alt="image" src="https://github.com/user-attachments/assets/866c97e8-3d6b-4bd4-88bb-5fc423114f65" />
