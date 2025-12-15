@@ -40,6 +40,8 @@ done
 </details>
 
 Next, put rp_abun.py in the same folder as your DIAMOND outputs.
+
+This code was written by Monjura Afrin Rumi a few years ago. 
 <details>
   <summary>rp_abun.py</summary>
   
@@ -200,6 +202,8 @@ pip install plotly kaleido
 conda install pandas
 ```
 Run cal_abundances.sh to calculate the abundance of each ARG and RPOB gene in every sample.
+
+**Mistake to avoid: Make sure the --db is set to "card". The default is "deeparg", and without specifying the code will not run**
 <details>
 <summary> cal_abundances.sh</summary>
 
