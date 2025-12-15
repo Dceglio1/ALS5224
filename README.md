@@ -5,6 +5,15 @@ DIAMOND outputs are a little tricky, as it does not compile the number of times 
 
 As a refresher, here's the code I ran for DIAMOND. This took ~1 day.
 
+Inputs:
+- CARD4.0.1.dmnd: This is the DIAMOND file created from the fasta file from the referecne database
+- RpoB.dmnd: DIAMOND file showing all rpob genes. Created by someone else
+- FASTQ files: Samples from after running fastq, bbduk, and vsearch
+
+Note: --id only reports alignments above the listed percentage. 80% is chosen for the ARGs because the CARD database
+is manually curated, and we are confident reads close to the reference reads are ARGs. 40% is chosen for the rpob
+genes as those are much more common, and can have differences compared to the database. 
+
 <details>
   <summary>diamond.sh</summary>
   
