@@ -448,8 +448,8 @@ ggplot(subset(bubble, Fraction %in% c("100M", "30M", "BOIL", "EFF", "INF")), aes
 Output:
 - The image below
 
-This gets you the image below.
 <img width="1472" height="1021" alt="image" src="https://github.com/user-attachments/assets/0ee978ba-f591-4d76-b549-0894ca8132b3" />
 
+The data comes from a wastewater treatment plant (WWTP) in Norfolk, VA, collected in 2021. INF and EFF are the influent and effluent of the WWTP respecively. After treatment, the effluent is sent into the Chesapeake Bay. BOIL represents water collected directly above the diffuser pipe (diffusing effluent into the Bay), while 30M and 100M are waters 30 meters and 100 meters setback from the diffuser. The Control was water collected at the Chesapeake Bay Bridge Tunnel, far away and (supposedly) free from influence from the WWTP.
 
 
