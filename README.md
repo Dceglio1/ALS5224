@@ -448,6 +448,8 @@ ggplot(subset(bubble, Fraction %in% c("100M", "30M", "BOIL", "EFF", "INF")), aes
 Output:
 - The image below
 
-This gets you the image below. I'll write up results later. 
-<img width="1192" height="787" alt="image" src="https://github.com/user-attachments/assets/866c97e8-3d6b-4bd4-88bb-5fc423114f65" />
+This gets you the image below.
+<img width="1472" height="1021" alt="image" src="https://github.com/user-attachments/assets/0ee978ba-f591-4d76-b549-0894ca8132b3" />
+
+
 
