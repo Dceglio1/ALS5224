@@ -450,7 +450,7 @@ Output:
 
 <img width="1020" height="723" alt="image" src="https://github.com/user-attachments/assets/05016fd1-02f9-4c3a-9754-0dacb709cdd2" />
 Figure 1. Log change in average abundance of rpob gene normalzied ARGs in different sampling locations relative to the control location.  
-
+  
 The data comes from a wastewater treatment plant (WWTP) in Norfolk, VA, collected in 2021. INF and EFF are the influent and effluent of the WWTP respecively. After treatment, the effluent is sent into the Chesapeake Bay. BOIL represents water collected directly above the diffuser pipe (diffusing effluent into the Bay), while 30M and 100M are waters 30 meters and 100 meters setback from the diffuser. The Control was water collected at the Chesapeake Bay Bridge Tunnel, far away and (supposedly) free from influence from the WWTP.
 
 Both INF and EFF have higher concentrations of all antibiotic resistance gene (ARG) classes compared to the Control. This is expected, as both WWTP influent and effluent are known to contain high concentrations of ARGs, relative to surface waters. Effluent waters had higher concentrations of sulfonamide ARGs compared to influent. Keenum et al. also found that sulfonamide and aminoglycoside ARGs increased from influent to effluent in chlorinated WWTPs. Effluent waters also showed increased concentrations of other drug and phenicol resistance encoding ARGs compared to influent, trends not observed in Keenum et al. All four 
