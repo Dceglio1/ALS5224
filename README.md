@@ -5,6 +5,7 @@ DIAMOND outputs are a little tricky, as it does not compile the number of times 
 
 #### Code in ARC for DIAMOND
 
+**diamond.sh**
 Inputs:
 - CARD4.0.1.dmnd: This is the DIAMOND file created from the fasta file from the reference database (CARD database, version 4.0.1)
 - RpoB.dmnd: DIAMOND file showing all rpob genes. Created by someone else
@@ -216,6 +217,7 @@ conda install ipykernel
 pip install plotly kaleido
 conda install pandas
 ```
+**cal_abundances.sh**
 Run cal_abundances.sh to calculate the abundance of each ARG and RPOB gene in every sample. This code came from Thomas Byrne. 
 
 Inputs:
@@ -275,6 +277,7 @@ done
 Outputs:
 - 1 "abundance" file for each sample, showing rpob normalized ARG counts
 
+**merging_my_normalized.sh**
 Finally, run merging_my_noramlized.sh. This script merges the previous abundance_new.csv files for each sample into a single, final output: I2GDS_G6_AMR_Diamond.txt. This output will be one of the inputs for the R script.
 
 Inputs:
@@ -328,6 +331,7 @@ Output:
 
 ### Workin in R
 
+**ChezLiz.R**
 Below is the R code used. 
 
 Packages: Tidyverse, version 2.0.0
