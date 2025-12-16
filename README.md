@@ -207,7 +207,7 @@ if __name__ == '__main__':
 </details>
 
 
-Then, run cal_abundances.sh. You'll first need to create an environment named "mypy3" and install python and pandas in the ARC. To do so, use the following lines of code.
+Then, run cal_abundances.sh. You'll first need to create an environment named "mypy3" and install python (version 3.1.2) and pandas (version 2.3.3) in the ARC. To do so, use the following lines of code.
 
 ```
 conda create -n mypy3 python=3.12 pip 
@@ -332,7 +332,7 @@ Below is the R code used.
 
 Packages: Tidyverse, version 2.0.0
 
-**Mistake to Avoid: Make sure only TidyVerse is loaded. Other packages use the 'group_by' function, and will mess the code up if ther're loaded**
+**Mistake to Avoid: Make sure only TidyVerse is loaded. Other packages use the 'group_by' function, and will mess the code up if they're loaded**
 
 Inputs:
 - CARD4.0.1_aro_cat.csv: From the CARD database, contains metadata about each ARG. Received when downloading CARD
