@@ -6,7 +6,7 @@ DIAMOND outputs are a little tricky, as it does not compile the number of times 
 #### Code in ARC for DIAMOND
 
 Inputs:
-- CARD4.0.1.dmnd: This is the DIAMOND file created from the fasta file from the referecne database
+- CARD4.0.1.dmnd: This is the DIAMOND file created from the fasta file from the reference database (CARD database, version 4.0.1)
 - RpoB.dmnd: DIAMOND file showing all rpob genes. Created by someone else
 - FASTQ files: Samples from after running fastq, bbduk, and vsearch
 
