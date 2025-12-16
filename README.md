@@ -334,7 +334,7 @@ Output:
 
 ### Workin in R
 
-**ChezLiz.R**
+**I2GDSFinal.R**
 
 Below is the R code used. 
 
@@ -350,7 +350,7 @@ Inputs:
 
 
 <details>
-<summary> ChezLiz.R</summary>
+<summary> I2GDSFinal.R</summary>
 
 ```
 #Initializing tidyverse, setting working directory, inputting needed files
@@ -405,7 +405,7 @@ Args$Drug <- as.factor(Args$Drug)
 #Only separating by fraction to see how different sampling locations are different
 bubble <- Args %>%
   group_by(Drug, Fraction) %>%
-  summarize(sum_rpob_normalized_count = sum(rpob_Normalization))
+  summarize(sum_rpob_normalized_count = mean(rpob_Normalization))
 
 #The "CONTROL" sample type occurs every 5th row in bubble
 controlRow <- 5
@@ -448,8 +448,14 @@ ggplot(subset(bubble, Fraction %in% c("100M", "30M", "BOIL", "EFF", "INF")), aes
 Output:
 - The image below
 
-<img width="1472" height="1021" alt="image" src="https://github.com/user-attachments/assets/0ee978ba-f591-4d76-b549-0894ca8132b3" />
+<img width="1448" height="973" alt="image" src="https://github.com/user-attachments/assets/91df5cc6-197e-48b4-bdb5-d3f9f6de7ec6" />
+
 
 The data comes from a wastewater treatment plant (WWTP) in Norfolk, VA, collected in 2021. INF and EFF are the influent and effluent of the WWTP respecively. After treatment, the effluent is sent into the Chesapeake Bay. BOIL represents water collected directly above the diffuser pipe (diffusing effluent into the Bay), while 30M and 100M are waters 30 meters and 100 meters setback from the diffuser. The Control was water collected at the Chesapeake Bay Bridge Tunnel, far away and (supposedly) free from influence from the WWTP.
 
+Both INF and EFF have higher concentrations of all antibiotic resistance gene (ARG) classes compared to the Control. This is expected, as both WWTP influent and effluent are known to contain high concentrations of ARGs, relative to surface waters. Effluent waters had higher concentrations of sulfonamide ARGs compared to influent. Keenum et al. also found that sulfonamide and aminoglycoside ARGs increased from influent to effluent in chlorinated WWTPs. Effluent waters also showed increased concentrations of other drug and phenicol resistance encoding ARGs compared to influent, trends not observed in Keenum et al. All four 
+
+
+
+Keenum, I., Calarco, J., Majeed, H., Hager-Soto, E. E., Bott, C., Garner, E., Harwood, V. J., & Pruden, A. (2024). To what extent do water reuse treatments reduce antibiotic resistance indicators? A comparison of two full-scale systems. Water Research, 254, 121425. https://doi.org/10.1016/j.watres.2024.121425
 
